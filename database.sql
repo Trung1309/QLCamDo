@@ -19,3 +19,9 @@ create table NhanVien(
 	diaChi	nvarchar(50)
 	
 )
+create table KhachHang(
+	maKH nvarchar(20) ,
+	tenKH nvarchar(50),
+	diaChi nvarchar(300),
+	SDT int
+)
