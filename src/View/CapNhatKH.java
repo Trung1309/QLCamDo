@@ -5,6 +5,10 @@
  */
 package View;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 
 /**
@@ -222,9 +226,15 @@ public class CapNhatKH extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_PriceActionPerformed
 
     private void jButton_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ExitActionPerformed
-        // TODO add your handling code here:
-        //this.setVisible(false);
-        new QuanLyKhachHang().show();
+        try {
+            // TODO add your handling code here:
+            //this.setVisible(false);
+            new QuanLyKhachHang().show();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CapNhatKH.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CapNhatKH.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.hide();
         
        

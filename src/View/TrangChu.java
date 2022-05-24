@@ -5,6 +5,9 @@
  */
 package View;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import swing5_camdo.GiaHan;
 import swing5_camdo.ThanhLyHopDong;
 
@@ -324,8 +327,14 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        new QuanLyKhachHang().show();
+        try {
+            // TODO add your handling code here:
+            new QuanLyKhachHang().show();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.hide();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

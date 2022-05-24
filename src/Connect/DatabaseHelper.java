@@ -13,11 +13,11 @@ import java.sql.SQLException;
  */
 public class DatabaseHelper {
     public static Connection getConnection() throws ClassNotFoundException, SQLException{
-        String url = "jdbc:sqlserver://localhost:1433;database=QuanLiCamDo";
+        String url = "jdbc:jtds:sqlserver://LAPTOP-QDS4JLPE:1433/QuanLiCamDo;instance=SQLEXPRESS";
         String user = "sa";
-        String pass = "abc123";
+        String pass = "sa123";
         Connection conn ;
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        Class.forName("net.sourceforge.jtds.jdbc.Driver");
         conn = DriverManager.getConnection(url,user,pass);
         System.out.println(conn.getCatalog());
         return conn;

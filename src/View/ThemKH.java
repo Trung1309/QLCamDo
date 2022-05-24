@@ -5,6 +5,10 @@
  */
 package View;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 
 /**
@@ -165,10 +169,16 @@ public class ThemKH extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_idActionPerformed
 
     private void jButton_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_exitActionPerformed
-        // TODO add your handling code here:
-        QuanLyKhachHang dk = new QuanLyKhachHang();
-        this.dispose();
-        dk.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            new QuanLyKhachHang().setVisible(true);
+            this.dispose();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ThemKH.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ThemKH.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton_exitActionPerformed
 
     private void jButton_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_resetActionPerformed

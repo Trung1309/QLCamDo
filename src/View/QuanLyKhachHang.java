@@ -4,6 +4,14 @@
  */
 package View;
 
+import Dao.KhachHangDao;
+import DoDung.KhachHang;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author thuyd
@@ -13,9 +21,20 @@ public class QuanLyKhachHang extends javax.swing.JFrame {
     /**
      * Creates new form QuanLyKhachHang
      */
-    public QuanLyKhachHang() {
+    private List<KhachHang> ql;
+    private DefaultTableModel model;
+    DefaultTableModel defaultTableModel;
+    public QuanLyKhachHang() throws ClassNotFoundException, SQLException {
         initComponents();
         setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
+        model = (DefaultTableModel)jTable1.getModel();
+        showTable();
+    }
+    private void setTableData(List<KhachHang> ql){
+        for (KhachHang qltv : ql){
+            defaultTableModel.addRow(new Object[]{qltv.getMaKH(), qltv.getTenKH(), qltv.getDiaChi(),qltv.getSDT()});
+        }
     }
 
     /**
@@ -307,7 +326,15 @@ public class QuanLyKhachHang extends javax.swing.JFrame {
         new TrangChu().show();
         this.hide();
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    private void showTable() throws ClassNotFoundException, SQLException {
+        ql = new KhachHangDao().getAllUsers();
+        model.setRowCount(0);
+        for (KhachHang qly : ql) {
+            model.addRow(new Object[]{
+                qly.getMaKH(), qly.getTenKH(), qly.getDiaChi(), qly.getSDT()
+            });
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -338,7 +365,13 @@ public class QuanLyKhachHang extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuanLyKhachHang().setVisible(true);
+                try {
+                    new QuanLyKhachHang().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(QuanLyKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(QuanLyKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
