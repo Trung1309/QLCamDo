@@ -39,4 +39,25 @@ public class KhachHangDao {
         }
         return ltl;
     }
+    public ArrayList<KhachHang> findTaiLieu(String id) throws ClassNotFoundException, SQLException{
+        ArrayList<KhachHang> ql = new ArrayList<KhachHang>();
+        Connection connection = DatabaseHelper.getConnection();
+        String sql = "select * from KhachHang where maKH like ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,"%"+id+"%");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                KhachHang tl = new KhachHang();
+                tl.setMaKH(rs.getString("maKH"));
+                tl.setTenKH(rs.getString("tenKH"));
+                tl.setDiaChi(rs.getString("diaChi"));
+                tl.setSDT(rs.getInt("SDT"));
+                ql.add(tl);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ql;
+    }
 }
