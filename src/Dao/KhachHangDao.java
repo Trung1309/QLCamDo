@@ -77,4 +77,17 @@ public class KhachHangDao {
             e.printStackTrace();
         }
     }
+     public void delete(String id) throws ClassNotFoundException, SQLException{
+       Connection connection = DatabaseHelper.getConnection();
+        String sql = "delete from KhachHang where maKH = ?";
+        
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, id);           
+            int rs = preparedStatement.executeUpdate();
+                System.out.println(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

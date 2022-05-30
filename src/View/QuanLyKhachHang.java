@@ -120,6 +120,11 @@ public class QuanLyKhachHang extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("UTM Avo", 0, 11)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_delete_30px.png"))); // NOI18N
         jButton6.setText("Xóa");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -374,6 +379,13 @@ public class QuanLyKhachHang extends javax.swing.JFrame {
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        XoaKH xoa = new XoaKH();
+        this.dispose();
+        xoa.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
     private void showTable() throws ClassNotFoundException, SQLException {
         ql = new KhachHangDao().getAllUsers();
         model.setRowCount(0);
