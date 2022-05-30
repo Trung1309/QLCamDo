@@ -39,6 +39,22 @@ public class KhachHangDao {
         }
         return ltl;
     }
+    public List<String> getAllId() throws ClassNotFoundException, SQLException {
+        List<String> ltl = new ArrayList<String>();
+
+        Connection connection = DatabaseHelper.getConnection();
+        String sql = "select * from KhachHang";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                ltl.add(rs.getString("maKH"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ltl;
+    }
     public ArrayList<KhachHang> findTaiLieu(String id) throws ClassNotFoundException, SQLException{
         ArrayList<KhachHang> ql = new ArrayList<KhachHang>();
         Connection connection = DatabaseHelper.getConnection();
@@ -89,5 +105,40 @@ public class KhachHangDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+     public void updateUser(KhachHang tl) throws ClassNotFoundException, SQLException{
+        Connection connection = DatabaseHelper.getConnection();
+        String sql = "Update KhachHang set tenKH = '?' , diaChi = '?' , SDT ? where maKH = ? ";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(4, tl.getMaKH());
+            preparedStatement.setString(1, tl.getTenKH());
+            preparedStatement.setString(2, tl.getDiaChi());
+            preparedStatement.setInt(3, tl.getSDT());
+            if(preparedStatement.executeUpdate()>0){
+                System.out.println("Update thành công!");
+            };
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+     public KhachHang find1TaiLieu(String id) throws ClassNotFoundException, SQLException{
+         KhachHang ql = new KhachHang();
+        Connection connection = DatabaseHelper.getConnection();
+        String sql = "select * from KhachHang where maKH like ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,"%"+id+"%");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                ql.setMaKH(rs.getString("maKH"));
+                ql.setTenKH(rs.getString("tenKH"));
+                ql.setDiaChi(rs.getString("diaChi"));
+                ql.setSDT(rs.getInt("SDT"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ql;
     }
 }

@@ -5,9 +5,13 @@
  */
 package View;
 
+import Dao.KhachHangDao;
+import DoDung.KhachHang;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 
@@ -20,9 +24,11 @@ public class CapNhatKH extends javax.swing.JFrame {
     /**
      * Creates new form addForm
      */
-    public CapNhatKH() {
+    private DoDung.KhachHang ttkh;
+    
+    public CapNhatKH() throws SQLException, ClassNotFoundException {
         initComponents();
-      
+        getDataComboBox();
         setLocationRelativeTo(null);
     }
 
@@ -242,21 +248,64 @@ public class CapNhatKH extends javax.swing.JFrame {
 
     private void jButton_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_saveActionPerformed
         // TODO add your handling code here:
-  
+        KhachHangDao qlkh = new KhachHangDao();
+        int otp = JOptionPane.showConfirmDialog(this, "Bạn có muốn sửa hay không?", "Confirm", JOptionPane.YES_OPTION);
+        if(otp == JOptionPane.YES_OPTION){
+            try {
+                KhachHang bk = new KhachHang();
+                bk.setMaKH(jComboBox_id.getSelectedItem().toString());
+                bk.setTenKH(jTextField_Title.getText());
+                bk.setDiaChi(jTextField_Price.getText());
+                bk.setSDT(Integer.parseInt(jTextField_Price1.getText()));
+                try {
+                    qlkh.updateUser(bk);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(CapNhatKH.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CapNhatKH.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JOptionPane.showMessageDialog(this, "Bạn đã sửa thông tin thành công!");
+                QuanLyKhachHang fm = new QuanLyKhachHang();
+                this.dispose();
+                fm.setVisible(true);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(CapNhatKH.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(CapNhatKH.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
         
     }//GEN-LAST:event_jButton_saveActionPerformed
        
     private void jComboBox_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_idActionPerformed
         // TODO add your handling code here:
+        int index = jComboBox_id.getSelectedIndex();
+        KhachHangDao qlkh = new KhachHangDao();
+        String value = jComboBox_id.getItemAt(index);
+        try {
+            ttkh = qlkh.find1TaiLieu(value);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CapNhatKH.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CapNhatKH.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       jTextField_Title.setText(ttkh.getTenKH());
+       jTextField_Price.setText(ttkh.getDiaChi());
+       jTextField_Price1.setText(Integer.toString(ttkh.getSDT()));
 
     }//GEN-LAST:event_jComboBox_idActionPerformed
 
     private void jTextField_Price1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Price1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_Price1ActionPerformed
-    private void getDataComboBox(){
-       
+
+    private void getDataComboBox() throws SQLException, ClassNotFoundException{
+        KhachHangDao kh = new KhachHangDao();
+        List<String> data = kh.getAllId();
+        for(String s: data){
+            jComboBox_id.addItem(s);
+        }
     }
     /**
      * @param args the command line arguments
@@ -289,7 +338,13 @@ public class CapNhatKH extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CapNhatKH().setVisible(true);
+                try {
+                    new CapNhatKH().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CapNhatKH.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(CapNhatKH.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
