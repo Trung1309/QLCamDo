@@ -5,9 +5,12 @@
  */
 package View;
 
+import Dao.KhachHangDao;
+import DoDung.KhachHang;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 
@@ -65,7 +68,7 @@ public class ThemKH extends javax.swing.JFrame {
 
         jButton_reset.setBackground(new java.awt.Color(236, 240, 241));
         jButton_reset.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton_reset.setText("Reset");
+        jButton_reset.setText("Làm mới");
         jButton_reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_resetActionPerformed(evt);
@@ -105,8 +108,8 @@ public class ThemKH extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton_save, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57)
-                        .addComponent(jButton_reset, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                        .addComponent(jButton_reset)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                         .addComponent(jButton_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -191,6 +194,31 @@ public class ThemKH extends javax.swing.JFrame {
 
     private void jButton_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_saveActionPerformed
         // TODO add your handling code here:
+        KhachHang ql = new KhachHang();
+        ql.setMaKH(jTextField_id.getText());
+        ql.setTenKH(jTextField_Title.getText());
+        ql.setDiaChi(jTextField_Price.getText());
+        ql.setSDT(Integer.parseInt(jTextField1.getText()));
+        boolean isOk=true;
+            if(isOk){
+            try {
+                try {
+                    new KhachHangDao().add(ql);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ThemKH.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ThemKH.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JOptionPane.showMessageDialog(this, "Bạn đã thêm thông tin thành công!");
+                QuanLyKhachHang fm = new QuanLyKhachHang();
+                this.dispose();
+                fm.setVisible(true);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThemKH.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThemKH.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
    
     
     }//GEN-LAST:event_jButton_saveActionPerformed

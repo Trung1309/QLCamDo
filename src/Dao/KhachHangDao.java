@@ -60,4 +60,21 @@ public class KhachHangDao {
         }
         return ql;
     }
+     public void add(KhachHang tl) throws ClassNotFoundException, SQLException{
+     Connection connection = DatabaseHelper.getConnection();          
+            String sql = "INSERT INTO KhachHang (maKH, tenKH, diaChi, SDT) "
+                    + "values (?,?,?,?) ";            
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, tl.getMaKH());
+                preparedStatement.setString(2, tl.getTenKH());
+                preparedStatement.setString(3, tl.getDiaChi());
+                preparedStatement.setInt(4, tl.getSDT());
+//                int rs = preparedStatement.executeUpdate();
+//                System.out.println(rs);
+                preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
